@@ -11,15 +11,22 @@ namespace AssignmentProject.Tests
         public void ShouldPurchaseProduct()
         {
             Drink soda = new Drink(15, "Soda");
+            Snack chocolate = new Snack(10, "Chocolate bar");
             List<Product> testProducts = new List<Product>();
             testProducts.Add(soda);
             VendingMachine vendingMachine = new VendingMachine(testProducts);
+
             Assert.Throws<ArgumentOutOfRangeException>(() => vendingMachine.Purchase(soda));
             vendingMachine.InsertMoney(50);
             Drink purchasedSoda = vendingMachine.Purchase(soda) as Drink;
             Assert.Equal(soda, purchasedSoda);
             Assert.Equal(35, vendingMachine.MoneyPool);
             Assert.Equal(soda.Use(), purchasedSoda.Use());
+
+            Snack purchasedChocolate = vendingMachine.Purchase(chocolate) as Snack;
+            Assert.Equal(chocolate, purchasedChocolate);
+            Assert.Equal(25, vendingMachine.MoneyPool);
+            Assert.Equal(chocolate.Use(), purchasedChocolate.Use());
         }
 
         [Fact]
